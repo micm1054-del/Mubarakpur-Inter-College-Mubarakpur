@@ -1,134 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Mubarakpur Inter College Result</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M P INTER COLLEGE Result</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #000;
-    color: white;
-    text-align: center;
+
+/* Body */
+
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    background:#f1f3f4;
 }
 
-/* Top Bar */
-.topbar {
-    background: #111;
-    padding: 15px;
+/* Main Container */
+
+.container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:120px;
+    box-sizing:border-box;
 }
 
-/* Title */
-.title {
-    margin: 0;
-    padding-bottom: 10px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
+/* Heading */
+
+.title{
+    font-size:45px;
+    font-weight:bold;
+    color:#1a73e8;
+    margin-bottom:40px;
+    text-align:center;
 }
 
-/* Input & Button */
-input {
-    padding: 10px;
-    width: 200px;
-    border: none;
-    outline: none;
+/* Search Box */
+
+.search-box{
+    width:90%;
+    max-width:850px;
+    background:white;
+    border-radius:50px;
+    display:flex;
+    align-items:center;
+    padding:18px 25px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.08);
 }
 
-button {
-    padding: 10px 15px;
-    background: green;
-    color: white;
-    border: none;
-    cursor: pointer;
+/* Search Icon */
+
+.search-icon{
+    font-size:28px;
+    color:#666;
+}
+
+/* Input */
+
+.search-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:none;
+    font-size:24px;
+    padding-left:15px;
+}
+
+/* Search Button */
+
+.search-btn{
+    margin-top:35px;
+}
+
+.search-btn button{
+    background:#1a73e8;
+    color:white;
+    border:none;
+    padding:16px 40px;
+    border-radius:35px;
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.search-btn button:hover{
+    background:#1665c0;
+}
+
+/* Result Container */
+
+#resultContainer{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    margin-top:50px;
+    text-align:center;
 }
 
 /* Result Image */
-#result img {
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    object-fit: contain;
-    cursor: zoom-in;
+
+#resultImage{
+    max-width:90%;
+    display:none;
+    margin:auto;
+    border-radius:15px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.12);
 }
 
-/* Modal Fullscreen */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
+/* Download Button */
+
+#downloadBtn{
+    display:none;
+    margin-top:25px;
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:15px 35px;
+    border-radius:30px;
+    font-size:20px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.modal img {
-    margin: auto;
-    display: block;
-    width: 100%;
-    height: auto;
+#downloadBtn:hover{
+    background:#12813a;
 }
 
-.close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 30px;
-    color: white;
-    cursor: pointer;
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+.container{
+    padding-top:90px;
 }
+
+.title{
+    font-size:30px;
+}
+
+.search-box{
+    padding:14px 18px;
+}
+
+.search-box input{
+    font-size:18px;
+}
+
+.search-btn button{
+    font-size:18px;
+    padding:14px 30px;
+}
+
+#downloadBtn{
+    font-size:17px;
+}
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="topbar">
-    <h1 class="title">Mubarakpur Inter College Mubarakpur</h1>
+<div class="container">
 
-    <input type="text" id="roll" placeholder="Adhar last 6 digits">
-    <button onclick="showResult()">Search</button>
-</div>
+    <!-- Heading -->
 
-<div id="result"></div>
+    <div class="title">
+        M P INTER COLLEGE
+    </div>
 
-<!-- Fullscreen Modal -->
-<div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImg">
+    <!-- Search Box -->
+
+    <div class="search-box">
+
+        <div class="search-icon">
+            🔍
+        </div>
+
+        <input 
+            type="text"
+            id="searchInput"
+            placeholder="Enter Aadhaar Last 6 Digits"
+        >
+
+    </div>
+
+    <!-- Search Button -->
+
+    <div class="search-btn">
+
+        <button onclick="searchResult()">
+            Search
+        </button>
+
+    </div>
+
+    <!-- Result Area -->
+
+    <div id="resultContainer">
+
+        <img id="resultImage">
+
+        <br>
+
+        <a id="downloadLink" download>
+
+            <button id="downloadBtn">
+                Download
+            </button>
+
+        </a>
+
+    </div>
+
 </div>
 
 <script>
-function showResult() {
-    let roll = document.getElementById("roll").value.trim();
-    let imgPath = "results/" + roll + ".jpg";
 
-    let img = new Image();
-    img.src = imgPath;
+/*
 
-    img.onload = function() {
-        document.getElementById("result").innerHTML =
-            "<img src='" + imgPath + "' onclick='openModal(this.src)'>";
+FOLDER STRUCTURE:
+
+project-folder
+│
+├── index.html
+│
+└── results
+      ├── 123456.jpg
+      ├── 654321.jpg
+      ├── 987654.jpg
+
+Image name = Aadhaar last 6 digits
+
+*/
+
+function searchResult(){
+
+    let input = document.getElementById("searchInput").value.trim();
+
+    // Empty Check
+
+    if(input == ""){
+
+        alert("Enter Aadhaar Last 6 Digits");
+
+        return;
+
+    }
+
+    // Elements
+
+    let resultImage = document.getElementById("resultImage");
+
+    let downloadBtn = document.getElementById("downloadBtn");
+
+    let downloadLink = document.getElementById("downloadLink");
+
+    // Image Path
+
+    let imagePath = "./results/" + input + ".jpg";
+
+    // Check Image Exists
+
+    let testImage = new Image();
+
+    // If Found
+
+    testImage.onload = function(){
+
+        resultImage.src = imagePath;
+
+        resultImage.style.display = "block";
+
+        downloadBtn.style.display = "inline-block";
+
+        downloadLink.href = imagePath;
+
     };
 
-    img.onerror = function() {
-        document.getElementById("result").innerHTML =
-            "<h3>❌ Result not found</h3>";
+    // If Not Found
+
+    testImage.onerror = function(){
+
+        alert("No Data Found");
+
+        resultImage.style.display = "none";
+
+        downloadBtn.style.display = "none";
+
     };
+
+    testImage.src = imagePath;
+
 }
 
-// Open Fullscreen
-function openModal(src) {
-    document.getElementById("myModal").style.display = "block";
-    document.getElementById("modalImg").src = src;
-}
-
-// Close Fullscreen
-function closeModal() {
-    document.getElementById("myModal").style.display = "none";
-}
 </script>
 
 </body>
